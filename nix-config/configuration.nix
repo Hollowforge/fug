@@ -51,9 +51,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "rama" ];
-
   
   nix.settings.experimental-features = [
     "nix-command"
@@ -82,15 +79,23 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+
+  users.mutableUsers = false;
+
   users.users.rama = {
     isNormalUser = true;
     home = "/home/rama";
     description = "rama";
-    extraGroups = [ "networkmanager" "wheel" "vboxsf" ];
+    initialHashedPassword = "$7$CU..../....4AUiia1IoLmGShOWiL0Wr.$mlMEIV7XIEd2QlHyOTrYpzxtgP3LhuV8pUCRoK64dZ6";
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
     ];
+  };
+
+  users.users.root = {
+    initialHashedPassword = config.users.users.rama.initialHashedPassword;
   };
 
   # Install firefox.
