@@ -17,6 +17,8 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  programs.ssh.startAgent = true;
+
   # Set your time zone.
   time.timeZone = "Australia/Sydney";
 

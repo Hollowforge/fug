@@ -29,7 +29,7 @@
     ...
   }: {
     nixosConfigurations = {
-      desktop = let
+      ai = let
         username = "rama";
         specialArgs = {inherit username;};
       in
@@ -39,10 +39,10 @@
 
           modules = [
             impermanence.nixosModules.impermanence
-            ./hosts/desktop/impermanence.nix
+            ./hosts/ai/impermanence.nix
             
-            ./hosts/desktop/default.nix
-            ./hosts/desktop/hardware-configuration.nix
+            ./hosts/ai/default.nix
+            ./hosts/ai/hardware-configuration.nix
 
             home-manager.nixosModules.home-manager
             {
