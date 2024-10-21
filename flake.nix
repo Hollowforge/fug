@@ -20,22 +20,39 @@
     };
   };
 
-  # Define outputs
-  outputs = { self, nixpkgs, impermanence }: {
-    nixosConfigurations = {
-      # Define a desktop configuration for NixOS
-      desktop = nixpkgs.lib.nixosSystem {
-        # Target system architecture
-        system = "x86_64-linux";
 
-        # Import modules for this host's configuration
-        modules = [
-          impermanence.nixosModules.impermanence
-          ./configuration.nix                # Your main NixOS configuration
-          ./hardware-configuration.nix        # Import hardware configuration
-          ./impermanence.nix                  # Import your impermanence-specific settings
-        ];
-      };
+    outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  }: {
+    nixosConfigurations = {
+      nixos-test = let
+        username = "rama";
+        specialArgs = {inherit username;};
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+
+          modules = [
+            ./hosts/desktop/impermanence.nix
+            impermanence.nixosModules.impermanence
+            
+            ./hosts/desktop
+            ./users/${username}/nixos.nix
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.users.${username} = import ./users/${username}/home.nix;
+            }
+          ];
+        };
     };
   };
 }
