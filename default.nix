@@ -42,6 +42,28 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  # Disable hibernation and suspend-to-disk
+  systemd = {
+    targets = {
+      sleep = {
+        enable = false;
+        unitConfig.DefaultDependencies = "no";
+      };
+      suspend = {
+        enable = false;
+        unitConfig.DefaultDependencies = "no";
+      };
+      hibernate = {
+        enable = false;
+        unitConfig.DefaultDependencies = "no";
+      };
+      "hybrid-sleep" = {
+        enable = false;
+        unitConfig.DefaultDependencies = "no";
+      };
+    };
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -112,9 +134,9 @@
     wget
     github-desktop
     vscodium
+    discord
     #zoom-us
     #obsidian
-    chromium
 
     smartmontools
     gparted
@@ -127,6 +149,22 @@
     nix-output-monitor
 
     cryptsetup
+
+
+    # System monitoring
+    btop
+    iotop
+    radeontop
+    iftop
+
+    duf
+
+    lm_sensors
+
+    powerstat
+    hwinfo
+    i2c-tools
+
   ];
 
 

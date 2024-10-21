@@ -18,13 +18,19 @@
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.enable = true;
 
+  # Set boot loader to store previous builds
+  boot.loader.systemd-boot.configurationLimit = 20;
+
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+
+  # Disable hibernation
+  boot.kernelParams = [ "nohibernate" ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"]; # kvm virtualization support
-  boot.extraModprobeConfig = "options kvm_amd nested=1"; # for intel cpu
+  boot.extraModprobeConfig = "options kvm_amd nested=1"; # for amd cpu
   boot.extraModulePackages = [];
   # clear /tmp on boot to get a stateless /tmp directory.
   boot.tmp.cleanOnBoot = true;

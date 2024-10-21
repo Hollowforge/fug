@@ -41,6 +41,8 @@
 
       "/var/log"
       "/var/lib"
+#       "/nix/var/nix/profiles/system"
+#       "/boot/loader/entries"
 
       # created by modules/nixos/misc/fhs-fonts.nix
       # for flatpak apps
