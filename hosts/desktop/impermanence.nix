@@ -3,9 +3,9 @@
   pkgs,
   ...
 }: {
-#   imports = [
-#     impermanence.nixosModules.impermanence
-#   ];
+    # imports = [
+    #   impermanence.nixosModules.impermanence
+    # ];
 
   environment.systemPackages = [
     # `sudo ncdu -x /`

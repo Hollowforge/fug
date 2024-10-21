@@ -25,10 +25,11 @@
     self,
     nixpkgs,
     home-manager,
+    impermanence,
     ...
   }: {
     nixosConfigurations = {
-      nixos-test = let
+      desktop = let
         username = "rama";
         specialArgs = {inherit username;};
       in
@@ -37,11 +38,11 @@
           system = "x86_64-linux";
 
           modules = [
-            ./hosts/desktop/impermanence.nix
             impermanence.nixosModules.impermanence
+            ./hosts/desktop/impermanence.nix
             
-            ./hosts/desktop
-            ./users/${username}/nixos.nix
+            ./hosts/desktop/default.nix
+            ./hosts/desktop/hardware-configuration.nix
 
             home-manager.nixosModules.home-manager
             {
