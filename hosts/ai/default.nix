@@ -168,6 +168,8 @@
     hwinfo
     i2c-tools
 
+    tree
+
   ];
 
 
